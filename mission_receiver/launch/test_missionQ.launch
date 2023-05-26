@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <node pkg="mission_receiver" type="mission_receiver_test" name="mission_receiver_test" output="screen">
+    </node>
+</launch>

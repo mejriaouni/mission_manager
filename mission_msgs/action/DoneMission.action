@@ -1,0 +1,8 @@
+#goal definition
+MissionMsg mission
+---
+#result definition
+int32 result
+---
+#feedback
+FeedbackMsg feedback

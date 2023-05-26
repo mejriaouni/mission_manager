@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <test pkg="mission_receiver" type="utest_node" test-name="unit_test_node"/>
+</launch>

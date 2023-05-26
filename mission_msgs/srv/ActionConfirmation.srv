@@ -1,0 +1,12 @@
+## Action
+string job_id
+string robot_id
+string action_id
+string action_type
+---
+## acknowledgement.
+# confirmation the answer from the user
+# retry if the mission_exe should retry or not
+bool confirmation
+bool retry
+

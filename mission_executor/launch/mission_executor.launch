@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<launch>
+
+   <!-- Config files -->
+
+
+   <node name="mission_executor" pkg="mission_executor" type="mission_executor" output="screen"/>
+   <node name="navigationfeedback" pkg="mission_executor" type="navigationfeedback" output="screen"/>
+
+
+</launch>

@@ -1,0 +1,18 @@
+
+# Charging level below wich to go charge
+charging_level: 10
+
+# List of poses where robot can charge
+charging_station_poses:
+  pose_1:
+    position:
+      x: 1.4809107780456543
+      y: 3.028531455993652
+      z: 0.0
+    orientation:
+      x: 0.0
+      y: 0.0
+      z: -0.10288596466907508
+      w: 0.9946931578502558
+
+

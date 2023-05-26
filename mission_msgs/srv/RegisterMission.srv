@@ -1,0 +1,4 @@
+MissionMsg[] missions
+---
+# acknowledgement. return true if the task is recieved at the robot side.
+bool ack

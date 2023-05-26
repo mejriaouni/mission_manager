@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+    <param name="action_server_name" value="mission_executor/mission_action_server"/>
+    <node pkg="mission_receiver" type="mission_receiver_node" name="mission_receiver" output="screen">
+
+    </node>
+            <include file="$(find mission_executor)/launch/mission_executor.launch"/>
+</launch>

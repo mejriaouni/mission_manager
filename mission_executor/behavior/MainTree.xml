@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BatteryCharge">
+        <ReactiveFallback>
+            <Condition ID="IsBatteryFull"/>
+            <ReactiveSequence name="Charge battery">
+                <Action ID="MoveToCharge"/>
+                <Action ID="ChargeBattery"/>
+            </ReactiveSequence>
+        </ReactiveFallback>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <ReactiveSequence>
+            <Condition ID="IsMissionActive" activeMission="{mission}" name="Mission active"/>
+            <Switch3 case_1="1" case_2="5" case_3="6" variable="{mission}">
+                <SubTree ID="EmergencyStop"/>
+                <SubTree ID="Disinfection"/>
+                <SubTree ID="BatteryCharge"/>
+                <SubTree ID="Default"/>
+            </Switch3>
+        </ReactiveSequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <BehaviorTree ID="Default">
+        <AlwaysFailure/>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <BehaviorTree ID="Disinfection">
+        <ReactiveSequence name="Proceed with task">
+            <ReactiveFallback name="Check battery">
+                <Condition ID="IsBatteryLow"/>
+                <SubTree ID="BatteryCharge"/>
+            </ReactiveFallback>
+            <ReactiveFallback name="Check position">
+                <Condition ID="IsRoomPositionCorrect" name="Is room and position correct"/>
+                <Action ID="MoveToDisinfect"/>
+            </ReactiveFallback>
+            <Sequence name="Disinfect room">
+                <ReactiveFallback name="Disinfection safety">
+                    <Condition ID="IsClearToDisinfect" name="Is it safe to disinfect"/>
+                    <Action ID="ErrorMessage"/>
+                </ReactiveFallback>
+                <Action ID="GetDisinfectionPath" current_room_disinfection_pose="{current_room_disinfection_pose}"/>
+                <Action ID="WarmUpLamps"/>
+                <ReactiveSequence name="Active disinfection">
+                    <ReactiveFallback name="Checking for people">
+                        <Inverter>
+                            <Condition ID="IsPersonDetected"/>
+                        </Inverter>
+                        <Action ID="ErrorMessage"/>
+                    </ReactiveFallback>
+                    <Action ID="FollowDisinfectionPath" current_room_disinfection_pose="{current_room_disinfection_pose}" />
+                    <ReactiveFallback name="Turn lamps off">
+                        <Inverter>
+                            <Condition ID="IsDisinfectionFinished" />
+                        </Inverter>
+                        <Action ID="TurnOffLamps"/>
+                    </ReactiveFallback>
+                </ReactiveSequence>
+            </Sequence>
+        </ReactiveSequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <BehaviorTree ID="EmergencyStop">
+        <Action ID="CancelAll"/>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Undefined ID=""/>
+        <Action ID="AlwaysFailureNode"/>
+        <SubTree ID="BatteryCharge"/>
+        <Decorator ID="BehaviorSwitch"/>
+        <Action ID="CancelAll"/>
+        <Action ID="ChargeBattery"/>
+        <Condition ID="CheckStop"/>
+        <SubTree ID="Default"/>
+        <SubTree ID="Disinfection"/>
+        <SubTree ID="Emergency"/>
+        <SubTree ID="EmergencyStop"/>
+        <Action ID="ErrorMessage"/>
+        <Action ID="FollowDisinfectionPath">
+            <inout_port name="current_room_disinfection_pose"/>
+        </Action>
+        <Action ID="GetDisinfectionPath">
+            <inout_port name="current_room_disinfection_pose"/>
+        </Action>
+        <SubTree ID="GuidedWalking"/>
+        <Condition ID="IsBatteryFull"/>
+        <Condition ID="IsBatteryLow"/>
+        <Condition ID="IsClearToDisinfect"/>
+        <Condition ID="IsDisinfectionFinished">
+        </Condition>
+        <Condition ID="IsEmergencyStopMission"/>
+        <Condition ID="IsMissionActive">
+            <output_port name="activeMission"/>
+        </Condition>
+        <Condition ID="IsPersonDetected"/>
+        <Condition ID="IsRoomPositionCorrect"/>
+        <Action ID="MoveToCharge"/>
+        <Action ID="MoveToDisinfect"/>
+        <Action ID="TurnOffLamps"/>
+        <Action ID="WarmUpLamps"/>
+        <Condition ID="isBatteryFull"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>

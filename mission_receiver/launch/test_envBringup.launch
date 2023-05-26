@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Start gazebo simulation-->
+    <include file="$(find done_magni_simulation)/launch/magni_world.launch"/>
+    
+    <!-- Start robot navigation stack -->
+    <include file="$(find done_magni_simulation)/launch/magni_nav.launch"/>
+
+    <!-- Start mission executor-->
+
+    <!-- Start mission reciever
+    <param name="action_server_name" value="mission_action_server"/>
+    <node pkg="mission_receiver" type="mission_receiver_node" name="mission_receiver" output="screen">
+    </node> -->
+
+</launch>
